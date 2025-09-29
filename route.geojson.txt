@@ -1,0 +1,15 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "name": "Hôpital Général de Kinshasa" },
+      "geometry": { "type": "Point", "coordinates": [15.3050, -4.3250] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Clinique Ngaliema" },
+      "geometry": { "type": "Point", "coordinates": [15.2915, -4.3222] }
+    }
+  ]
+}

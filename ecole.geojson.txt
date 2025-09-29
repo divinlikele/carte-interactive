@@ -1,0 +1,15 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "name": "École Primaire Matonge" },
+      "geometry": { "type": "Point", "coordinates": [15.3001, -4.3201] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Université de Kinshasa" },
+      "geometry": { "type": "Point", "coordinates": [15.2663, -4.3958] }
+    }
+  ]
+}

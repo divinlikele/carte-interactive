@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <title>Carte Interactive Professionnelle - Divin Likele</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+  
+  <style>
+    /* Carte */
+    #map { height: 100vh; }
+
+    /* Panneau des filtres */
+    .filter-box {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: white;
+      padding: 12px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      z-index: 1000;
+      width: 200px;
+    }
+    .filter-box h3 {
+      margin: 0 0 10px 0;
+      font-size: 16px;
+      color: #333;
+    }
+    .filter-box label {
+      display: block;
+      margin-bottom: 6px;
+      cursor: pointer;
+    }
+    .filter-box button {
+      margin-top: 8px;
+      width: 100%;
+      padding: 6px;
+      border: none;
+      background: #0078ff;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+    .filter-box button:hover {
+      background: #005fcc;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <!-- Panneau de filtres -->
+  <div class="filter-box">
+    <h3>📌 Filtres</h3>
+    <label><input type="checkbox" id="ecoles" checked> 🏫 Écoles</label>
+    <label><input type="checkbox" id="hopitaux" checked> 🏥 Hôpitaux</label>
+    <label><input type="checkbox" id="routes" checked> 🛣️ Routes</label>
+    <button id="toggleAll">Tout désélectionner</button>
+  </div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    var map = L.map('map').setView([-4.322447, 15.307045], 13);
+
+    // Fond OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Stockage des couches
+    var couches = {
+      "Écoles": null,
+      "Hôpitaux": null,
+      "Routes": null
+    };
+
+    // Charger et styliser les fichiers GeoJSON
+    function chargerGeoJSON(url, style, popupIcon, key) {
+      fetch(url)
+        .then(r => r.json())
+        .then(data => {
+          couches[key] = L.geoJSON(data, {
+            style: style,
+            onEachFeature: (f, l) => l.bindPopup(popupIcon + " " + f.properties.name)
+          }).addTo(map);
+        });
+    }
+
+    // Charger les données
+    chargerGeoJSON("ecoles.geojson", { color: "blue" }, "🏫", "Écoles");
+    chargerGeoJSON("hopitaux.geojson", { color: "red" }, "🏥", "Hôpitaux");
+    chargerGeoJSON("routes.geojson", { color: "green", weight: 3 }, "🛣️", "Routes");
+
+    // Checkbox individuelles
+    function toggleLayer(layerName, checkboxId) {
+      document.getElementById(checkboxId).addEventListener("change", function() {
+        if (this.checked && couches[layerName]) {
+          map.addLayer(couches[layerName]);
+        } else if (couches[layerName]) {
+          map.removeLayer(couches[layerName]);
+        }
+      });
+    }
+    toggleLayer("Écoles", "ecoles");
+    toggleLayer("Hôpitaux", "hopitaux");
+    toggleLayer("Routes", "routes");
+
+    // Bouton Tout sélectionner / Tout désélectionner
+    let allSelected = true;
+    document.getElementById("toggleAll").addEventListener("click", function() {
+      allSelected = !allSelected;
+      this.innerText = allSelected ? "Tout désélectionner" : "Tout sélectionner";
+      
+      document.getElementById("ecoles").checked = allSelected;
+      document.getElementById("hopitaux").checked = allSelected;
+      document.getElementById("routes").checked = allSelected;
+
+      for (let key in couches) {
+        if (couches[key]) {
+          if (allSelected) {
+            map.addLayer(couches[key]);
+          } else {
+            map.removeLayer(couches[key]);
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>

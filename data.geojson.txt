@@ -1,0 +1,47 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Université de Kinshasa",
+        "category": "Éducation",
+        "description": "Grande université publique de RDC",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/2/25/UNIKIN.jpg",
+        "link": "https://fr.wikipedia.org/wiki/Universit%C3%A9_de_Kinshasa"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [15.2663, -4.3958]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Marché Central",
+        "category": "Commerce",
+        "description": "Le plus grand marché populaire de Kinshasa",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/4/4a/Kinshasa_-_March%C3%A9_Central.jpg",
+        "link": "https://fr.wikipedia.org/wiki/Kinshasa"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [15.3139, -4.3275]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Stade des Martyrs",
+        "category": "Sport",
+        "description": "Grand stade national de Kinshasa",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/f/f2/Stade_des_Martyrs_%28Kinshasa%29.jpg",
+        "link": "https://fr.wikipedia.org/wiki/Stade_des_Martyrs"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [15.3211, -4.3667]
+      }
+    }
+  ]
+}
